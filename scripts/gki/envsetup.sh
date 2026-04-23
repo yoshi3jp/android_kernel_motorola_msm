@@ -2,10 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Copyright (c) 2019, The Linux Foundation. All rights reserved.
 
-SCRIPT_DIR=$(readlink -f $(dirname $0)/)
-cd ${SCRIPT_DIR}
-cd ../../
-KERN_SRC=`pwd`
+SCRIPT_DIR="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+KERN_SRC="$(readlink -f "${SCRIPT_DIR}/../../")"
 
 : ${ARCH:=arm64}
 : ${CROSS_COMPILE:=aarch64-linux-gnu-}
@@ -28,7 +26,7 @@ QCOM_QGKI_FRAG=${CONFIGS_DIR}/${PLATFORM_NAME}_QGKI.config
 QCOM_DEBUG_FRAG=${CONFIGS_DIR}/${PLATFORM_NAME}_debug.config
 
 # For user variant build merge debugfs.config fragment.
-if [ ${TARGET_BUILD_VARIANT} == "user" ]; then
+if [ "${TARGET_BUILD_VARIANT:-}" = "user" ]; then
 	QCOM_DEBUG_FS_FRAG=`ls ${CONFIGS_DIR}/debugfs.config 2> /dev/null`
 else
 	QCOM_DEBUG_FS_FRAG=" "
